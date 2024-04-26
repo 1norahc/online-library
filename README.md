@@ -1,4 +1,4 @@
-# Biblioteka Online
+# Biblioteka Online - tylko ksiązki w pdf :D (póki co :o)
 
 Projekt "Biblioteka Online" to aplikacja webowa oparta na frameworku Django, która umożliwia użytkownikom przeglądanie, dodawanie, edytowanie i usuwanie książek oraz autorów. Aplikacja wykorzystuje bazę danych do przechowywania informacji o książkach i autorach.
 
@@ -11,6 +11,7 @@ Projekt "Biblioteka Online" to aplikacja webowa oparta na frameworku Django, kt�
 - Wypożyczanie i zwracanie książek.
 - Generowanie rankingów książek.
 - Integracja z innym językiem programowania (opcjonalnie).
+- Streszaczanie ksiązek
 
 ## Technologie i algorytmy
 
