@@ -2,9 +2,6 @@ from dataclasses import dataclass
 import sqlite3
 import os
 
-class CREATE_DATABASE:
-    def __init__(self): pass    
-
 class DBFileDoesNotExists(Exception):
     def __init__(self, exception = "Data base file does not exists. Please give correct data base file path."):
         self.exception = exception
@@ -31,10 +28,28 @@ class DB:
     except DBFileDoesNotExists as e:
         EXCEPTION += str(e)
     
+    def create_db(self):
+        conn = sqlite3.connect(self.database_file_name)
+        cursor = conn.cursor()
+
+        # Stworzenie tabeli
+        cursor.execute('''CREATE TABLE IF NOT EXISTS Ksiazki (
+                            id INTEGER PRIMARY KEY,
+                            title TEXT NOT NULL,
+                            author TEXT NOT NULL,
+                            release_date DATE,
+                            publishing_house TEXT NOT NULL,
+                            summary TEXT NOT NULL,
+                            pages INTEGER NOT NULL
+                        )''')
+
+        # Zatwierdzenie zmian i zamknięcie połączenia
+        conn.commit()
+        conn.close()
+    
     def create_sql_connection(self):
-        connection = sqlite3.connect(self.database_file_name)
-        cursor = connection.cursor()
-        return connection, cursor
+        self.connection = sqlite3.connect(self.database_file_name)
+        self.cursor = self.connection.cursor()
     
     def _valid_data_structure(self, data_file_name: str):
         """
@@ -61,18 +76,44 @@ class DB:
             
         return data
         
-    def push2db(self, data: str): pass
+    def push2db(self, import_data):
+        valid_data = self._valid_data_structure(import_data) 
+        self.create_sql_connection()
+        for i in valid_data:
+            i = tuple(i)
+            self.cursor.execute(
+                f"""
+                INSERT INTO Ksiazki (
+                    id, title, author, release_date, publishing_house, summary, pages) 
+                    VALUES {i}
+                """
+            )
+        self.connection.commit()
+        self.connection.close()
+        
+    def read_db(self):
+        pass
+        
 
-    
     def __str__(self):
         # dodać to zeby bledy byly zapisywane w pliku z data oraz dlugoscia wykonywania progrmau
         string = f"\nTest\n====\n\nError: {self.ERROR}\nException: {self.EXCEPTION}\n"
         return string
     
 db = DB()
-x = db._valid_data_structure("database/test_data_book.txt")
-for i in x:
-    print(i)
+#db.create_db()
+#db.push2db("./database/test_data_book.txt")
+
+connection = sqlite3.connect("./database/online-library.db")
+cursor = connection.cursor()
+cursor.execute("SELECT * FROM Ksiazki")
+rows = cursor.fetchall()
+
+for row in rows:
+    print(row)
+
+connection.close()
+
     
 
 

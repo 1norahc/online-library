@@ -27,9 +27,6 @@ class Utils:
             return f"{self.year}-{self.month:02d}-{self.day:02d}"
 
 
-        
-
-
 """# Użycie:
 
 release_date = Utils().ReleaseDate(2024, 4, 25)
