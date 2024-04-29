@@ -24,15 +24,19 @@ Projekt "Biblioteka Online" to aplikacja webowa oparta na frameworku Django, kt�
 
 1. Sklonuj repozytorium: `git clone https://github.com/1norahc/online-library.git`
 
-2. Zainstaluj wymagane biblioteki: `pip install -r requirements.txt`
+2. Zainstaluj wirtualne środowisko (MacOS)
+    - `python3 -m venv <venv_name>`
+    - `source <venv_name>/bin/activate`
 
-3. Utwórz migracje:
+3. Zainstaluj wymagane biblioteki: `pip install -r requirements.txt`
+
+4. Utwórz migracje:
 `python manage.py makemigrations`
 `python manage.py migrate`
 
-4. Uruchom serwer deweloperski: `python manage.py runserver`
+5. Uruchom serwer deweloperski: `python manage.py runserver`
 
-5. Przejdź do przeglądarki i otwórz adres `http://localhost:8000/`.
+6. Przejdź do przeglądarki i otwórz adres `http://localhost:8000/`.
 
 ## Kontrybucje
 
