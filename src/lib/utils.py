@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 
 class Utils:
     class ReleaseDate:
@@ -26,15 +27,19 @@ class Utils:
             return f"{self.year}-{self.month:02d}-{self.day:02d}"
 
 
-# Użycie:
+        
 
-release_date = ReleaseDate(2024, 4, 25)
+
+"""# Użycie:
+
+release_date = Utils().ReleaseDate(2024, 4, 25)
 print("Release date:", release_date)  # Wyświetli: Release date: 2024-04-25
 
 release_date_str = "2024-04-25"
-release_date_from_str = ReleaseDate.from_string(release_date_str)
+release_date_from_str = release_date.from_string(release_date_str)
 print("Release date from string:", release_date_from_str)  # Wyświetli: Release date from string: 2024-04-25
 
 print("Is valid?", release_date.is_valid())  # Wyświetli: Is valid? True
 
-print(ReleaseDate(20232, 23, 20).__str__())
+print(Utils().ReleaseDate(20232, 23, 20).__str__())
+"""

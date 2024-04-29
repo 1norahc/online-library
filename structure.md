@@ -1,6 +1,14 @@
-# Database
+# Struktura aplikacji
 
-# User
+1. Jezyk glowny Python;
+2. Srodowsiko aplikacji Django;
+3. Srodowisko bazodanowe SQLite;
+
+## Database
+
+1. Silnik bazodanowy: SQLite (`python3 -mpip install sqlite3`)
+
+## User
 
 User
 |--- create new user
@@ -21,3 +29,5 @@ if True:
 else:
     proba_logowania += 1
     print("Nie poprawne dane logowania")
+
+

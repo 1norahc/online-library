@@ -1,43 +1,60 @@
-import time
+import json
+import os
+import datetime as dt
+from dataclasses import dataclass
 
+@dataclass
 class Login:
-    def __init__(self):
-        self.username = "example_user"
-        self.email = "example@example.com"
-        self.password = "example_password"
-        self.max_attempts = 3
-        self.attempts = 0
-        self.block_time_30min = None
-        self.block_time_24h = None
+    username: str = "example_user"
+    email: str = "example@example.com"
+    password: str = "example_password"
+    max_attempts: int = 3
+    attempts:int = 0
+    block_time_30min: int = None
+    block_time_24h: int = None
+
+    @classmethod
+    def check_attempts(cls, username_or_email):
+        log_file = "./src/database/logs.json"
+        logs = {}
+
+        if os.path.exists(log_file):
+            with open(log_file, "r") as file:
+                logs = json.load(file)
+
+        if username_or_email in logs:
+            return logs[username_or_email]
+        else:
+            return {"attempts": 0, "block_time_30min": None, "block_time_24h": None}
+
+    def update_logs(self, username_or_email):
+        log_file = "./src/database/logs.json"
+        logs = {}
+
+        if os.path.exists(log_file):
+            with open(log_file, "r") as file:
+                logs = json.load(file)
+
+        logs[username_or_email] = {
+            "attempts": self.attempts,
+            "block_time_30min": self.block_time_30min,
+            "block_time_24h": self.block_time_24h
+        }
+
+        with open(log_file, "w") as file:
+            json.dump(logs, file, indent=4)
 
     def authenticate(self, username_or_email, password):
-        if self.block_time_30min and time.time() < self.block_time_30min:
-            print("Konto jest zablokowane na 30 minut.")
-            return False
+        # Odniesienie się do check_attempts, żeby uzyskać aktualne dane dotyczące prób logowania
+        attempts_info = self.check_attempts(username_or_email)
+        self.attempts = attempts_info["attempts"]
+        self.block_time_30min = attempts_info["block_time_30min"]
+        self.block_time_24h = attempts_info["block_time_24h"]
 
-        if self.block_time_24h and time.time() < self.block_time_24h:
-            print("Konto jest zablokowane na 24 godziny.")
-            return False
+        # Logika uwierzytelniania
 
-        if self.attempts >= self.max_attempts:
-            print("Konto jest zablokowane na 30 minut.")
-            self.block_time_30min = time.time() + 30 * 60
-            self.attempts = 0
-            return False
-
-        if username_or_email == self.username or username_or_email == self.email:
-            if password == self.password:
-                print("Zalogowano pomyślnie.")
-                self.attempts = 0
-                return True
-            else:
-                print("Błędne hasło.")
-                self.attempts += 1
-                return False
-        else:
-            print("Niepoprawny username lub email.")
-            self.attempts += 1
-            return False
+        # Aktualizacja logów
+        self.update_logs(username_or_email)
 
 # Przykład użycia
 login = Login()

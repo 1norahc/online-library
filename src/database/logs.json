@@ -1,0 +1,7 @@
+{
+    "example_user": {
+        "attempts": 0,
+        "block_time_30min": null,
+        "block_time_24h": null
+    }
+}
