@@ -15,7 +15,7 @@ class DB:
     """
     DATABASE for online library
     """
-    database_file_name: str = "database/online-library.db"
+    database_file_name: str = "database/online-library.sql"
     ERROR: bool = False
     EXCEPTION: str = ""
     
@@ -28,7 +28,7 @@ class DB:
     except DBFileDoesNotExists as e:
         EXCEPTION += str(e)
     
-    def create_db(self):
+    def create_db(self, sql: str):
         conn = sqlite3.connect(self.database_file_name)
         cursor = conn.cursor()
 
