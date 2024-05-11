@@ -2,6 +2,9 @@
 
 Projekt "Biblioteka Online" to aplikacja webowa oparta na frameworku Django, która umożliwia użytkownikom przeglądanie, dodawanie, edytowanie i usuwanie książek oraz autorów. Aplikacja wykorzystuje bazę danych do przechowywania informacji o książkach i autorach.
 
+## ToDo
+-[] algorytm sortujacy ksiazki 
+
 ## Funkcje
 
 - Rejestracja i logowanie użytkowników.
